@@ -1,0 +1,10 @@
+services:
+  cloud-container:
+    build:
+      context: ./container
+      dockerfile: Dockerfile.cloud
+    container_name: cloud-container
+    ports:
+      - "4096:4096"
+    restart: no
+    

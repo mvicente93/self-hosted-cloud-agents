@@ -1,0 +1,23 @@
+FROM debian:bookworm-slim
+
+# run as non-root
+RUN groupadd -r cloud-container && useradd -r -g cloud-container -m -d /home/cloud-container cloud-container
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl bash git ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+USER cloud-container
+
+RUN curl -fsSL https://opencode.ai/install | bash
+
+ENV PATH="/home/cloud-container/.opencode/bin:$PATH"
+
+EXPOSE 4096
+
+# drop all capabilities, run read-only root fs except explicit mounts
+# these are enforced at docker run time but document intent here
+HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:4096/global/health || exit 1
+
+CMD ["opencode", "serve"]
