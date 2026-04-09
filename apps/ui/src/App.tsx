@@ -1,12 +1,12 @@
 import type { Component } from 'solid-js';
-import Comp from './Comp';
+import Sidebar from './components/Sidebar';
+import StartNewChat from './components/StartNewChat';
 
 const App: Component = () => {
   return (
-    <>
-      <h1>Hello world!!!!</h1>
-      <Comp />
-    </>
+    <Sidebar>
+      <StartNewChat />
+    </Sidebar>
   );
 };
 
