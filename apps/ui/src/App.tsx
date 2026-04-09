@@ -1,13 +1,14 @@
-import type { Component } from "solid-js";
-import Sidebar from "./components/Sidebar";
-import AgentInterface from "./components/AgentInterface";
+import { Component } from "solid-js";
+import { Router, Route } from "@solidjs/router";
+import Homepage from "./routes/Homepage";
+import Dashboard from "./routes/Dashboard";
 
 const App: Component = () => {
   return (
-    <div class="flex h-screen bg-[var(--terminal-bg)]">
-      <Sidebar />
-      <AgentInterface />
-    </div>
+    <Router>
+      <Route path="/" component={Homepage} />
+      <Route path="/dashboard" component={Dashboard} />
+    </Router>
   );
 };
 

@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "packageManager": "bun@1.3.11",
-  "workspaces":{
+  "workspaces": {
     "packages": [
       "apps/*"
     ],
