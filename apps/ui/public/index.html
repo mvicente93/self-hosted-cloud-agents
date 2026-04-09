@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgentForge — Run AI Agents on Your Infrastructure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../src/styles/terminal.css">
+</head>
+<body class="min-h-screen grid-bg">
+  <div class="scanlines"></div>
+  
+  <!-- Navigation -->
+  <nav class="relative z-10 flex items-center justify-between px-8 py-6 border-b border-[var(--terminal-green)]/20">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 border-2 border-[var(--terminal-green)] flex items-center justify-center terminal-text text-[var(--terminal-green)] font-bold">&gt;_</div>
+      <span class="text-2xl font-bold tracking-tight glow-green">AgentForge</span>
+    </div>
+    <div class="flex items-center gap-8 text-sm terminal-text">
+      <a href="#" class="text-[var(--terminal-green)] hover:underline">[FEATURES]</a>
+      <a href="#" class="hover:text-[var(--terminal-green)] transition-colors">DOCS</a>
+      <a href="#" class="hover:text-[var(--terminal-green)] transition-colors">GITHUB</a>
+      <a href="#" class="px-4 py-2 border border-[var(--terminal-green)] text-[var(--terminal-green)] hover:bg-[var(--terminal-green)] hover:text-[var(--terminal-bg)] transition-all terminal-text">GET STARTED_</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main class="relative z-10 px-8 py-20 max-w-7xl mx-auto">
+    <div class="grid grid-cols-2 gap-16 items-center">
+      <div>
+        <div class="terminal-text text-[var(--terminal-cyan)] mb-4 fade-in">
+          > INITIALIZING AGENT FRAMEWORK...
+        </div>
+        <h1 class="text-6xl font-black mb-6 leading-tight fade-in stagger-1">
+          Run <span class="glow-green text-[var(--terminal-green)]">AI Agents</span><br>
+          on Your <span class="glow-cyan text-[var(--terminal-cyan)]">Own Infrastructure</span>
+        </h1>
+        <p class="text-xl text-gray-400 mb-8 max-w-lg fade-in stagger-2">
+          Fully open-source. Deploy anywhere. Use any LLM. 
+          Connect GitHub, pick a repo, and let agents do the work.
+        </p>
+        <div class="flex gap-4 fade-in stagger-3">
+          <button type="button" class="px-8 py-4 bg-[var(--terminal-green)] text-[var(--terminal-bg)] font-bold text-lg hover:scale-105 transition-transform terminal-text pulse-glow">
+            LAUNCH CONSOLE_
+          </button>
+          <button type="button" class="px-8 py-4 border border-[var(--terminal-cyan)] text-[var(--terminal-cyan)] font-bold text-lg hover:bg-[var(--terminal-cyan)] hover:text-[var(--terminal-bg)] transition-all terminal-text">
+            VIEW DOCS
+          </button>
+        </div>
+        
+        <!-- Terminal window decoration -->
+        <div class="mt-12 p-4 border border-[var(--terminal-green)]/30 bg-black/50 terminal-text text-sm fade-in stagger-4">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+            <span class="ml-2 text-gray-500">agent@forge:~/workspace$</span>
+          </div>
+          <div class="text-[var(--terminal-green)]">
+            > connecting to github... <span class="text-gray-500">OK</span><br>
+            > loading repository... <span class="text-gray-500">OK</span><br>
+            > initializing agent... <span class="blinking-cursor">█</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="relative float-animation">
+        <div class="absolute inset-0 bg-gradient-to-r from-[var(--terminal-green)]/20 to-[var(--terminal-cyan)]/20 blur-3xl"></div>
+        <div class="relative gradient-border p-1">
+          <div class="bg-[#0d0d15] p-8">
+            <div class="flex items-center gap-2 mb-6 terminal-text text-xs text-gray-500">
+              <span class="text-[var(--terminal-magenta)]">◉</span> LIVE AGENT STATUS
+            </div>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between p-3 border border-[var(--terminal-green)]/20">
+                <span class="terminal-text text-sm">agent-01</span>
+                <span class="flex items-center gap-2 terminal-text text-xs text-[var(--terminal-green)]">
+                  <span class="w-2 h-2 bg-[var(--terminal-green)] rounded-full animate-pulse"></span>
+                  RUNNING
+                </span>
+              </div>
+              <div class="flex items-center justify-between p-3 border border-[var(--terminal-cyan)]/20">
+                <span class="terminal-text text-sm">agent-02</span>
+                <span class="flex items-center gap-2 terminal-text text-xs text-[var(--terminal-cyan)]">
+                  <span class="w-2 h-2 bg-[var(--terminal-cyan)] rounded-full animate-pulse"></span>
+                  IDLE
+                </span>
+              </div>
+              <div class="flex items-center justify-between p-3 border border-[var(--terminal-magenta)]/20">
+                <span class="terminal-text text-sm">agent-03</span>
+                <span class="flex items-center gap-2 terminal-text text-xs text-[var(--terminal-magenta)]">
+                  <span class="w-2 h-2 bg-[var(--terminal-magenta)] rounded-full animate-pulse"></span>
+                  PROCESSING
+                </span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-800 terminal-text text-xs">
+              <div class="flex justify-between text-gray-500">
+                <span>CPU</span>
+                <span class="text-[var(--terminal-green)]">23%</span>
+              </div>
+              <div class="flex justify-between text-gray-500 mt-2">
+                <span>MEM</span>
+                <span class="text-[var(--terminal-cyan)]">1.2GB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Features Section -->
+  <section class="relative z-10 px-8 py-20 border-t border-[var(--terminal-green)]/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="terminal-text text-[var(--terminal-yellow)] mb-4 text-center">> FEATURE_MATRIX</div>
+      <h2 class="text-4xl font-bold text-center mb-16">Built for <span class="text-[var(--terminal-cyan)]">Full Control</span></h2>
+      
+      <div class="grid grid-cols-3 gap-6">
+        <div class="p-6 border border-[var(--terminal-green)]/30 bg-black/30 card-hover">
+          <div class="w-12 h-12 mb-4 border-2 border-[var(--terminal-green)] flex items-center justify-center terminal-text text-[var(--terminal-green)]">01</div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--terminal-green)]">Self-Hosted</h3>
+          <p class="text-gray-400">Deploy on AWS, GCP, Azure, or your own servers. Your agents, your infrastructure.</p>
+        </div>
+        
+        <div class="p-6 border border-[var(--terminal-cyan)]/30 bg-black/30 card-hover">
+          <div class="w-12 h-12 mb-4 border-2 border-[var(--terminal-cyan)] flex items-center justify-center terminal-text text-[var(--terminal-cyan)]">02</div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--terminal-cyan)]">LLM Agnostic</h3>
+          <p class="text-gray-400">OpenAI, Anthropic, Ollama, local models. Swap providers with one config change.</p>
+        </div>
+        
+        <div class="p-6 border border-[var(--terminal-magenta)]/30 bg-black/30 card-hover">
+          <div class="w-12 h-12 mb-4 border-2 border-[var(--terminal-magenta)] flex items-center justify-center terminal-text text-[var(--terminal-magenta)]">03</div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--terminal-magenta)]">GitHub Native</h3>
+          <p class="text-gray-400">OAuth integration. Select any repo. Agents clone, analyze, and execute tasks.</p>
+        </div>
+        
+        <div class="p-6 border border-[var(--terminal-yellow)]/30 bg-black/30 card-hover">
+          <div class="w-12 h-12 mb-4 border-2 border-[var(--terminal-yellow)] flex items-center justify-center terminal-text text-[var(--terminal-yellow)]">04</div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--terminal-yellow)]">Open Source</h3>
+          <p class="text-gray-400">100% transparent. Audit the code. Fork it. Contribute. No vendor lock-in.</p>
+        </div>
+        
+        <div class="p-6 border border-[var(--terminal-green)]/30 bg-black/30 card-hover">
+          <div class="w-12 h-12 mb-4 border-2 border-[var(--terminal-green)] flex items-center justify-center terminal-text text-[var(--terminal-green)]">05</div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--terminal-green)]">Scalable</h3>
+          <p class="text-gray-400">Run one agent or hundreds. Horizontal scaling built-in.</p>
+        </div>
+        
+        <div class="p-6 border border-[var(--terminal-cyan)]/30 bg-black/30 card-hover">
+          <div class="w-12 h-12 mb-4 border-2 border-[var(--terminal-cyan)] flex items-center justify-center terminal-text text-[var(--terminal-cyan)]">06</div>
+          <h3 class="text-xl font-bold mb-3 text-[var(--terminal-cyan)]">Secure</h3>
+          <p class="text-gray-400">Your code never leaves your infrastructure. End-to-end encryption.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="relative z-10 px-8 py-24 text-center">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-4xl font-bold mb-6">Ready to <span class="glow-magenta text-[var(--terminal-magenta)]">Own Your Agents</span>?</h2>
+      <p class="text-xl text-gray-400 mb-8">Join thousands of developers running AI agents on their own infrastructure.</p>
+      <button type="button" class="px-10 py-5 bg-[var(--terminal-magenta)] text-white font-bold text-xl hover:scale-105 transition-transform terminal-text pulse-glow">
+        DEPLOY NOW_
+      </button>
+      <p class="mt-4 text-sm text-gray-500 terminal-text">> free forever for personal use</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 px-8 py-8 border-t border-[var(--terminal-green)]/20">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="terminal-text text-sm text-gray-500">
+        <span class="text-[var(--terminal-green)]">_</span> AGENTFORGE v1.0.0
+      </div>
+      <div class="flex gap-6 text-sm text-gray-500">
+        <a href="#" class="hover:text-[var(--terminal-green)]">LICENSE</a>
+        <a href="#" class="hover:text-[var(--terminal-cyan)]">DISCORD</a>
+        <a href="#" class="hover:text-[var(--terminal-magenta)]">TWITTER</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

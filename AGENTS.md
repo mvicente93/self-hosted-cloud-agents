@@ -9,13 +9,13 @@
 
 - **Runtime**: Bun v1.3.11
 - **Lint/Format**: Biome (referenced via catalog in package.json)
-- **UI Framework**: SolidJS + Vite + PandaCSS + ParkUI
+- **UI Framework**: SolidJS + Vite + TailwindCSS
 
 ## Architecture
 
 - **Monorepo** with Bun workspaces: `apps/*`
 - Root `index.ts` is the main entry point
-- `apps/ui` is the frontend app (SolidJS + Vite + daisyUI)
+- `apps/ui` is the frontend app (SolidJS + Vite + TailwindCSS)
 
 ## Notes
 

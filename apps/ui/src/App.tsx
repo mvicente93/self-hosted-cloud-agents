@@ -1,12 +1,13 @@
-import type { Component } from 'solid-js';
-import Sidebar from './components/Sidebar';
-import StartNewChat from './components/StartNewChat';
+import type { Component } from "solid-js";
+import Sidebar from "./components/Sidebar";
+import AgentInterface from "./components/AgentInterface";
 
 const App: Component = () => {
   return (
-    <Sidebar>
-      <StartNewChat />
-    </Sidebar>
+    <div class="flex h-screen bg-[var(--terminal-bg)]">
+      <Sidebar />
+      <AgentInterface />
+    </div>
   );
 };
 
