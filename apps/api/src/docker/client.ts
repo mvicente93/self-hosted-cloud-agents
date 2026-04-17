@@ -1,3 +1,4 @@
+import { fetch } from "bun";
 import type {
 	Container,
 	ContainerInspect,
