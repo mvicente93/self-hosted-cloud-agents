@@ -6,5 +6,5 @@ export {
 	type Image,
 	type SystemInfo,
 	type Volume,
-} from "./client";
-export * from "./types";
+} from "./src/client";
+export * from "./src/types";

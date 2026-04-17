@@ -1,13 +1,26 @@
 import { sleep } from "bun";
+import { getDatabaseClient } from "db/client";
+import { jobs } from "db/schema";
 import { eq, sql } from "drizzle-orm";
-import { getDatabaseClient } from "../db/client";
-import { jobs } from "../db/schema";
+import {
+	START_SESSION_JOB,
+	startSession,
+} from "./start-session/start-session.job";
 
 export class JobsService {
-	private dbClient;
+	private dbClient!: ReturnType<typeof getDatabaseClient>;
+	private jobsRegister: Record<string, (payload: unknown) => Promise<boolean>>;
 
 	constructor() {
 		this.dbClient = getDatabaseClient();
+		this.jobsRegister = {};
+		this.registerJobs();
+	}
+
+	private registerJobs() {
+		this.jobsRegister = {
+			[START_SESSION_JOB]: startSession,
+		};
 	}
 
 	private async claim() {
@@ -26,9 +39,15 @@ export class JobsService {
 			.returning({ id: jobs.id, payload: jobs.payload });
 	}
 
-	private async process(job) {
-		console.log("Processing job:", job.id);
-		return true;
+	private async process(job: { id: number; payload: unknown }) {
+		const payload = job.payload as { type: string };
+		const handler = this.jobsRegister[payload.type];
+		if (!handler) {
+			console.error("No handler for job type:", payload.type);
+			return false;
+		}
+		console.log("Processing job:", job.id, "type:", payload.type);
+		return await handler(job.payload);
 	}
 
 	private async finish(jobId: number) {
@@ -59,7 +78,7 @@ export class JobsService {
 				continue;
 			}
 
-			const ok = this.process(newJob);
+			const ok = await this.process(newJob);
 
 			if (!ok) {
 				this.fail(newJob.id);

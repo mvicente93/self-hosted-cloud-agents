@@ -1,6 +1,12 @@
 import { Database } from "bun:sqlite";
+import { existsSync, unlinkSync } from "fs";
+import { JobsService } from "./src/service";
 
-const DB_PATH = "./src/db/test.db";
+const DB_PATH = "../db/sqlite/test.db";
+
+if (existsSync(DB_PATH)) {
+	unlinkSync(DB_PATH);
+}
 
 const sqlite = new Database(DB_PATH);
 sqlite.exec(`
@@ -15,12 +21,11 @@ sqlite.exec(`
 
 const result = sqlite
 	.query("INSERT INTO jobs (payload, status) VALUES (?, 'pending')")
-	.run(JSON.stringify({ message: "test job" }));
+	.run(JSON.stringify({ type: "start-session", sessionId: "test-123" }));
 
 console.log("Inserted job:", result.lastInsertRowid);
 
 process.env.DB_PATH = DB_PATH;
 
-const { JobsService } = await import("./src/jobs/service");
 const service = new JobsService();
 await service.run();

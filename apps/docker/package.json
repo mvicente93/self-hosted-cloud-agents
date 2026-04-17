@@ -1,0 +1,9 @@
+{
+  "name": "docker",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "catalog:"
+  }
+}

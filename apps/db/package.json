@@ -1,12 +1,9 @@
 {
-  "name": "api",
-  "scripts": {
-    "dev": "bun run --hot src/index.ts"
-  },
+  "name": "db",
+  "private": true,
   "dependencies": {
     "drizzle": "catalog:",
-    "drizzle-orm": "catalog:",
-    "hono": "^4.12.12"
+    "drizzle-orm": "catalog:"
   },
   "devDependencies": {
     "@types/bun": "catalog:",
