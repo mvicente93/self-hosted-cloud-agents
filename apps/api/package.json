@@ -6,7 +6,8 @@
   "dependencies": {
     "drizzle": "catalog:",
     "drizzle-orm": "catalog:",
-    "hono": "^4.12.12"
+    "hono": "^4.12.12",
+    "db": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "catalog:",

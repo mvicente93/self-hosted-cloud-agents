@@ -12,8 +12,9 @@ class DatabaseClient {
 
 	private init() {
 		const sqlite = new Database(this.dbPath);
+		sqlite.run("PRAGMA journal_mode = WAL;");
+		sqlite.run("PRAGMA busy_timeout = 5000;");
 		const db = drizzle({ client: sqlite });
-		db.run("PRAGMA journal_mode = WAL;");
 		return db;
 	}
 }

@@ -2,10 +2,7 @@ import { sleep } from "bun";
 import { getDatabaseClient } from "db/client";
 import { jobs } from "db/schema";
 import { eq, sql } from "drizzle-orm";
-import {
-	START_SESSION_JOB,
-	startSession,
-} from "./start-session/start-session.job";
+import { START_SESSION_JOB, startSession } from "./start-session/start-session.job";
 
 export class JobsService {
 	private dbClient!: ReturnType<typeof getDatabaseClient>;
@@ -52,21 +49,16 @@ export class JobsService {
 
 	private async finish(jobId: number) {
 		console.log("Finished job:", jobId);
-		await this.dbClient.db
-			.update(jobs)
-			.set({ status: "finished" })
-			.where(eq(jobs.id, jobId));
+		await this.dbClient.db.update(jobs).set({ status: "finished" }).where(eq(jobs.id, jobId));
 	}
 
 	private async fail(jobId: number) {
 		console.log("Failed job:", jobId);
-		await this.dbClient.db
-			.update(jobs)
-			.set({ status: "failed" })
-			.where(eq(jobs.id, jobId));
+		await this.dbClient.db.update(jobs).set({ status: "failed" }).where(eq(jobs.id, jobId));
 	}
 
 	async run() {
+		console.log("Service is running!");
 		while (true) {
 			const [newJob] = await this.claim();
 			if (newJob !== undefined) {
