@@ -12,12 +12,14 @@ app.get("/", (c) => {
 app.post("/start-session", async (c) => {
 	const client = getDatabaseClient();
 
+	const port = Math.floor(Math.random() * (65536 - 1024)) + 1024;
+
 	const [job] = await client.db
 		.insert(jobs)
-		.values({ payload: { type: "start-session", sessionId: "test-123" }, status: "pending" })
+		.values({ payload: { type: "start-session", sessionId: crypto.randomUUID(), port: port }, status: "pending" })
 		.returning();
 
-	return c.json({ sessionId: job.id });
+	return c.json({ sessionId: job.id, port: port });
 });
 
 export default {

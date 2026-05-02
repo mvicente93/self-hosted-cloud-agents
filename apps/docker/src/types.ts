@@ -55,6 +55,12 @@ export interface CreateContainerConfig {
 	ExposedPorts?: Record<string, object>;
 }
 
+export interface PortBinding {
+	containerPort: number;
+	hostPort: number;
+	protocol?: "tcp" | "udp";
+}
+
 export interface Image {
 	Id: string;
 	RepoTags?: string[];

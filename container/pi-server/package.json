@@ -1,0 +1,11 @@
+{
+  "name": "pi-agent-api",
+  "type": "module",
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "@mariozechner/pi-coding-agent": "^1.0.0"
+  }
+}

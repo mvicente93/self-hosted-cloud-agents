@@ -7,10 +7,17 @@ export const jobs = sqliteTable("jobs", {
 	status: text({
 		enum: ["pending", "started", "finished", "failed"],
 	}).default("pending"),
-	created: integer({ mode: "timestamp_ms" }).default(
-		sql`(CAST(unixepoch('now', 'subsec') * 1000 AS INTEGER))`,
-	),
-	updated: integer({ mode: "timestamp_ms" }).default(
-		sql`(CAST(unixepoch('now', 'subsec') * 1000 AS INTEGER))`,
-	),
+	created: integer({ mode: "timestamp_ms" }).default(sql`(CAST(unixepoch('now', 'subsec') * 1000 AS INTEGER))`),
+	updated: integer({ mode: "timestamp_ms" }).default(sql`(CAST(unixepoch('now', 'subsec') * 1000 AS INTEGER))`),
+});
+
+export const sessions = sqliteTable("sessions", {
+	id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
+	port: integer({ mode: "number" }).notNull(),
+	agent: text({ mode: "json" }).notNull(),
+	status: text({
+		enum: ["running", "stopped"],
+	}).default("stopped"),
+	created: integer({ mode: "timestamp_ms" }).default(sql`(CAST(unixepoch('now', 'subsec') * 1000 AS INTEGER))`),
+	updated: integer({ mode: "timestamp_ms" }).default(sql`(CAST(unixepoch('now', 'subsec') * 1000 AS INTEGER))`),
 });

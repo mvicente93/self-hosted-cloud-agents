@@ -1,12 +1,7 @@
 import { Database } from "bun:sqlite";
-import { existsSync, unlinkSync } from "fs";
 import { JobsService } from "./src/service";
 
 const DB_PATH = "../db/sqlite/test.db";
-
-if (existsSync(DB_PATH)) {
-	unlinkSync(DB_PATH);
-}
 
 const sqlite = new Database(DB_PATH);
 sqlite.exec(`
@@ -25,7 +20,7 @@ const result = sqlite
 
 console.log("Inserted job:", result.lastInsertRowid);
 
-process.env.DB_PATH = DB_PATH;
+// process.env.DB_PATH = DB_PATH;
 
-const service = new JobsService();
-await service.run();
+//const service = new JobsService();
+//await service.run();

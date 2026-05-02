@@ -20,4 +20,4 @@ EXPOSE 4096
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:4096/global/health || exit 1
 
-CMD ["opencode", "serve"]
+CMD ["opencode", "serve", "--hostname", "0.0.0.0"]

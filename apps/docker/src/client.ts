@@ -4,6 +4,7 @@ import type {
 	ContainerInspect,
 	CreateContainerConfig,
 	Image,
+	PortBinding,
 	SystemInfo,
 	Volume,
 } from "./types";
@@ -71,7 +72,46 @@ export class DockerClient {
 	}
 
 	async createContainer(config: CreateContainerConfig): Promise<{ Id: string }> {
-		return this.request("POST", "/containers/create", config);
+		return this.request<{ Id: string }>("POST", "/containers/create", config);
+	}
+
+	async createContainerWithPorts({
+		image,
+		portBindings,
+		env,
+		labels,
+		cmd,
+	}: {
+		image: string;
+		portBindings?: PortBinding[];
+		env?: string[];
+		labels?: Record<string, string>;
+		cmd?: string[];
+	}): Promise<{ Id: string }> {
+		const exposedPorts: Record<string, object> = {};
+		const hostPortBindings: Record<string, Array<{ HostPort: string }>> = {};
+
+		if (portBindings) {
+			for (const binding of portBindings) {
+				const protocol = binding.protocol || "tcp";
+				const containerPortKey = `${binding.containerPort}/${protocol}`;
+				exposedPorts[containerPortKey] = {};
+				hostPortBindings[containerPortKey] = [{ HostPort: String(binding.hostPort) }];
+			}
+		}
+
+		const config: CreateContainerConfig = {
+			Image: image,
+			Cmd: cmd,
+			Env: env,
+			Labels: labels,
+			ExposedPorts: Object.keys(exposedPorts).length > 0 ? exposedPorts : undefined,
+			HostConfig: {
+				PortBindings: Object.keys(hostPortBindings).length > 0 ? hostPortBindings : undefined,
+			},
+		};
+
+		return this.createContainer(config);
 	}
 
 	async execInContainer(
@@ -130,6 +170,7 @@ export type {
 	ContainerInspect,
 	CreateContainerConfig,
 	Image,
+	PortBinding,
 	SystemInfo,
 	Volume,
 };
