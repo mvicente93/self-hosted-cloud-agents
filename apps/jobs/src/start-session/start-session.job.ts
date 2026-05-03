@@ -1,10 +1,12 @@
 import { getDatabaseClient } from "db/client";
 import { sessions } from "db/schema";
 import { DockerClient } from "docker";
+import { eq } from "drizzle-orm";
 
 interface StartSessionPayload {
 	type: string;
 	sessionId: string;
+	prompt?: string;
 	agent: string;
 }
 
@@ -12,6 +14,8 @@ const AGENT_IMAGES: Record<string, string> = {
 	pi: "self-hosted-cloud-agents-pi-container:latest",
 	opencode: "self-hosted-cloud-agents-cloud-container:latest",
 };
+
+const CONTAINER_PORT = 3000;
 
 export async function startSession(payload: unknown): Promise<boolean> {
 	const typedPayload = payload as StartSessionPayload;
@@ -42,6 +46,20 @@ export async function startSession(payload: unknown): Promise<boolean> {
 	// Get container IP
 	const containerIp = await dockerClient.getContainerIp(container.Id);
 
+	// Send initial prompt to container if provided
+	if (typedPayload.prompt) {
+		const containerUrl = `http://${containerIp}:${CONTAINER_PORT}`;
+		try {
+			await fetch(`${containerUrl}/session/${sessionRecord.id}/prompt`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ prompt: typedPayload.prompt }),
+			});
+		} catch (error) {
+			console.error("Failed to send initial prompt:", error);
+		}
+	}
+
 	// Update session with container info
 	await dbClient.db
 		.update(sessions)
@@ -50,7 +68,7 @@ export async function startSession(payload: unknown): Promise<boolean> {
 			containerIp,
 			status: "running",
 		})
-		.where(sessions.id.equals(sessionRecord.id));
+		.where(eq(sessions.id, sessionRecord.id));
 
 	return true;
 }

@@ -1,6 +1,7 @@
 import { getDatabaseClient } from "db/client";
 import { jobs, sessions } from "db/schema";
 import { DockerClient } from "docker";
+import { eq } from "drizzle-orm";
 
 import { Hono } from "hono";
 
@@ -35,7 +36,7 @@ app.get("/session/:id", async (c) => {
 	const sessionId = parseInt(c.req.param("id"));
 	const client = getDatabaseClient();
 
-	const [session] = await client.db.select().from(sessions).where(sessions.id.equals(sessionId));
+	const [session] = await client.db.select().from(sessions).where(eq(sessions.id, sessionId));
 
 	if (!session) {
 		return c.json({ error: "Session not found" }, 404);
@@ -65,7 +66,7 @@ app.post("/session/:id/prompt", async (c) => {
 	const { prompt } = body;
 
 	const client = getDatabaseClient();
-	const [session] = await client.db.select().from(sessions).where(sessions.id.equals(sessionId));
+	const [session] = await client.db.select().from(sessions).where(eq(sessions.id, sessionId));
 
 	if (!session) {
 		return c.json({ error: "Session not found" }, 404);
@@ -91,8 +92,7 @@ app.post("/session/:id/prompt", async (c) => {
 app.get("/session/:id/stream", async (c) => {
 	const sessionId = parseInt(c.req.param("id"));
 	const client = getDatabaseClient();
-
-	const [session] = await client.db.select().from(sessions).where(sessions.id.equals(sessionId));
+	const [session] = await client.db.select().from(sessions).where(eq(sessions.id, sessionId));
 
 	if (!session) {
 		return c.json({ error: "Session not found" }, 404);
@@ -137,7 +137,7 @@ app.get("/session/:id/logs", async (c) => {
 	const sessionId = parseInt(c.req.param("id"));
 	const client = getDatabaseClient();
 
-	const [session] = await client.db.select().from(sessions).where(sessions.id.equals(sessionId));
+	const [session] = await client.db.select().from(sessions).where(eq(sessions.id, sessionId));
 
 	if (!session) {
 		return c.json({ error: "Session not found" }, 404);
