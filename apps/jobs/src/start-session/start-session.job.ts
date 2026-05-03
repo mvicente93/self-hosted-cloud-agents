@@ -5,7 +5,6 @@ import { DockerClient } from "docker";
 interface StartSessionPayload {
 	type: string;
 	sessionId: string;
-	port: number;
 	agent: string;
 }
 
@@ -23,7 +22,6 @@ export async function startSession(payload: unknown): Promise<boolean> {
 	const [sessionRecord] = await dbClient.db
 		.insert(sessions)
 		.values({
-			port: typedPayload.port,
 			agent: typedPayload.agent,
 			status: "starting",
 		})

@@ -15,7 +15,6 @@ export const sessions = sqliteTable("sessions", {
 	id: integer({ mode: "number" }).primaryKey({ autoIncrement: true }),
 	containerId: text(),
 	containerIp: text(),
-	port: integer({ mode: "number" }).notNull(),
 	agent: text({ mode: "json" }).notNull(),
 	status: text({
 		enum: ["running", "stopped"],

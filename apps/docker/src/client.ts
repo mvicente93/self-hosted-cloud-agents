@@ -53,6 +53,22 @@ export class DockerClient {
 		return inspect.NetworkSettings?.IPAddress || "";
 	}
 
+	async getContainerLogs(
+		id: string,
+		options: { stdout?: boolean; stderr?: boolean; tail?: number; timestamps?: boolean } = {},
+	): Promise<Response> {
+		const params = new URLSearchParams();
+		if (options.stdout !== false) params.set("stdout", "true");
+		if (options.stderr !== false) params.set("stderr", "true");
+		if (options.tail) params.set("tail", String(options.tail));
+		if (options.timestamps) params.set("timestamps", "true");
+
+		const url = `http://localhost/containers/${id}/logs?${params}`;
+		return fetch(url, {
+			unix: this.socketPath,
+		});
+	}
+
 	async startContainer(id: string): Promise<void> {
 		await this.request("POST", `/containers/${id}/start`);
 	}
