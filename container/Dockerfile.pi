@@ -1,20 +1,22 @@
 FROM debian:bookworm-slim
 
-ARG PORT=3000
-
 # run as non-root
 RUN groupadd -r cloud-container && useradd -r -g cloud-container -m -d /home/cloud-container cloud-container
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl bash git ca-certificates gnupg \
+    curl bash git ca-certificates gnupg unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Bun
-RUN curl -fsSL https://bun.sh/install | bash
-ENV BUN_INSTALL="/root/.bun"
-ENV PATH="$BUN_INSTALL/bin:$PATH"
+# Create and set ownership of working directory
+RUN mkdir -p /home/cloud-container/pi-agent \
+    && chown -R cloud-container:cloud-container /home/cloud-container
 
 USER cloud-container
+
+# Install Bun
+RUN curl -fsSL https://bun.com/install | bash
+ENV BUN_INSTALL="/home/cloud-container/.bun"
+ENV PATH="$BUN_INSTALL/bin:$PATH"
 
 WORKDIR /home/cloud-container
 
@@ -25,11 +27,9 @@ WORKDIR /home/cloud-container/pi-agent
 
 RUN bun install
 
-ENV PORT=$PORT
-
-EXPOSE $PORT
+EXPOSE 3000
 
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:$PORT/ || exit 1
+    CMD curl -f http://localhost:3000/ || exit 1
 
 CMD ["bun", "run", "index.ts"]

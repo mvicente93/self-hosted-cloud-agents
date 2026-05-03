@@ -6,6 +6,6 @@
   },
   "dependencies": {
     "hono": "^4.0.0",
-    "@mariozechner/pi-coding-agent": "^1.0.0"
+    "@mariozechner/pi-coding-agent": "latest"
   }
 }

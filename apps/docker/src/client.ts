@@ -48,6 +48,11 @@ export class DockerClient {
 		return this.request<ContainerInspect>("GET", `/containers/${id}/json`);
 	}
 
+	async getContainerIp(id: string): Promise<string> {
+		const inspect = await this.getContainer(id);
+		return inspect.NetworkSettings?.IPAddress || "";
+	}
+
 	async startContainer(id: string): Promise<void> {
 		await this.request("POST", `/containers/${id}/start`);
 	}
